@@ -9,8 +9,8 @@ export async function GET(req: Request, { params }: Props) {
   try {
     const { id } = params;
 
-    const foundTicket = await Todo.findOne({ _id: id });
-    return NextResponse.json({ foundTicket }, { status: 200 });
+    const foundTodo = await Todo.findOne({ _id: id });
+    return NextResponse.json({ foundTodo }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "Error", error }, { status: 500 });
   }
@@ -21,7 +21,7 @@ export async function DELETE(req: Request, { params }: Props) {
     const { id } = params;
     await Todo.findByIdAndDelete(id);
 
-    return NextResponse.json({ message: "Ticket Deleted" }, { status: 200 });
+    return NextResponse.json({ message: "Todo Deleted" }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "Error", error }, { status: 500 });
   }
@@ -31,13 +31,13 @@ export async function PUT(req: Request, { params }: Props) {
   try {
     const { id } = params;
     const body = await req.json()
-    const ticketData = body.formData
+    const todoData = body.formData
 
-    const updateTicketData = await Todo.findByIdAndUpdate(id, {
-        ...ticketData
+    const updateTodoData = await Todo.findByIdAndUpdate(id, {
+        ...todoData
     })
 
-    return NextResponse.json({ message: "Ticket Updated" }, { status: 200 });
+    return NextResponse.json({ message: "Todo Updated" }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "Error", error }, { status: 500 });
   }

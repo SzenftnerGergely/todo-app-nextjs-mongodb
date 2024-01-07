@@ -1,9 +1,14 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Josefin_Sans } from 'next/font/google'
 import './globals.css'
-import Nav from './(components)/Nav'
+import Background from './(components)/Background'
+import Header from './(components)/Header'
+import CreateTodo from './(components)/CreateTodo'
 
-const inter = Inter({ subsets: ['latin'] })
+const Josefin_San = Josefin_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,9 +22,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-      <Nav />
-        {children}
+      <body className={Josefin_San.className}>
+        <Background />
+        <div className='h-screen w-full flex flex-col items-center'>
+          <Header/>
+          {children}
+        </div>
       </body>
     </html>
   )

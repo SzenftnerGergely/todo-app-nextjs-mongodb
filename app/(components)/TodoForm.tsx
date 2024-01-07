@@ -4,18 +4,13 @@ import { useRouter } from "next/navigation"
 import React, { ChangeEvent, ChangeEventHandler, FormEvent, useState } from "react"
 import { TodoType } from "../(models)/types";
 
-type StartingTicketData = {
-    title: string;
-    description: string;
-    priority: number;
-    progress: number;
-    status: string;
-    category: string;
+type StartingTodoData = {
+  title: string;
 }
 
-const TicketForm = ({ticket}) => {
+const TodoForm = ({todo}) => {
 
-    const EDITMODE = ticket._id === "new" ? false : true
+    const EDITMODE = todo._id === "new" ? false : true
 
     const router = useRouter()
 
@@ -33,7 +28,7 @@ const TicketForm = ({ticket}) => {
         e.preventDefault();
 
         if (EDITMODE) {
-          const res = await fetch(`/api/Tickets/${ticket._id}`, {
+          const res = await fetch(`/api/Todos/${todo._id}`, {
             method: "PUT",
             headers: {
               "Content-type": "application/json",
@@ -41,17 +36,17 @@ const TicketForm = ({ticket}) => {
             body: JSON.stringify({ formData }),
           });
           if (!res.ok) {
-            throw new Error("Failed to update ticket");
+            throw new Error("Failed to update todo");
           }
         } else {
-          const res = await fetch("/api/Tickets", {
+          const res = await fetch("/api/Todos", {
             method: "POST",
             body: JSON.stringify({ formData }),
             //@ts-ignore
             "Content-Type": "application/json",
           });
           if (!res.ok) {
-            throw new Error("Failed to create ticket");
+            throw new Error("Failed to create todo");
           }
         }
     
@@ -59,15 +54,15 @@ const TicketForm = ({ticket}) => {
         router.push("/");
       };
 
-    const startingTicketData = {
+    const startingTodoData = {
         title: "",
     }
 
     if (EDITMODE) {
-        startingTicketData["title"] = ticket.title;
+      startingTodoData["title"] = todo.title;
       }
 
-    const [formData, setFormData] = useState<StartingTicketData>(startingTicketData)
+    const [formData, setFormData] = useState<StartingTodoData>(startingTodoData)
 
     return (
         <div className="flex justify-center">
@@ -96,4 +91,4 @@ const TicketForm = ({ticket}) => {
     )
 }
 
-export default TicketForm
+export default TodoForm

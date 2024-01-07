@@ -1,9 +1,10 @@
-import TicketCard from "./(components)/TicketCard";
+import CreateTodo from "./(components)/CreateTodo";
+import SingleTodo from "./(components)/SingleTodo";
 import { TodoType } from "./(models)/types";
 
 const getTickets = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/Tickets', {
+    const res = await fetch('http://localhost:3000/api/Todos', {
       cache: "no-store"
     })
 
@@ -22,17 +23,20 @@ export default async function Home() {
   ] as string[]
 
   return (
-    <div className='p-5'>
+    <div className='w-1/4 flex flex-col'>
+      <CreateTodo />
       <div>
         {tickets &&
           uniqueCategories?.map((uniqueCategory, categoryIndex) => (
-            <div key={categoryIndex} className='mb-4'>
+            <div key={categoryIndex}>
               <h2>{uniqueCategory}</h2>
-              <div className='lg:grid grid-cols-2 xl:grid-cols-4'>
+              <div className="bg-white shadow-md rounded-md">
                 {tickets
                   .filter((ticket: { category: string }) => ticket.category === uniqueCategory)
                   .map((filteredTicket: TodoType, _index: string) => (
-                    <TicketCard id={_index} key={_index} ticket={filteredTicket} />
+                    <div key={_index}>
+                      <SingleTodo id={_index}  todo={filteredTicket} />
+                    </div>
                   ))}
               </div>
             </div>

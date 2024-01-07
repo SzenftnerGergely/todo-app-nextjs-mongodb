@@ -1,7 +1,6 @@
 "use client"
 
-import { faX } from '@fortawesome/free-solid-svg-icons/faX'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 type Props = {
@@ -11,8 +10,8 @@ type Props = {
 const DeleteBlock: React.FC<Props> = ({ id }) => {
   const router = useRouter()
 
-  const deleteTicket = async () => {
-    const res = await fetch(`http://localhost:3000/api/Tickets/${id}`, {
+  const deleteTodo = async () => {
+    const res = await fetch(`http://localhost:3000/api/Todos/${id}`, {
       method: "DELETE"
     })
     if(res.ok) {
@@ -21,13 +20,15 @@ const DeleteBlock: React.FC<Props> = ({ id }) => {
   }
 
   return (
-    <>
-      <FontAwesomeIcon 
-        icon={faX} 
-        className='text-red-400 hover:cursor-pointer hover:text-red-200' 
-        onClick={deleteTicket}
+    <div className='hover:cursor-pointer hover:bg-slate-300 p-2 rounded-full' >
+      <Image 
+        src="/icon-cross.svg"
+        alt='delete-icon'
+        width={18}
+        height={18}
+        onClick={deleteTodo}
       />
-    </>
+    </div>
   )
 }
 
